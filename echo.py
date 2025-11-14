@@ -25,10 +25,13 @@ def chatserver(ip, sort):
         for s in readable: #for socket in readable
             try:
                 if s == server: #s is server socket
-                    pass
+                    client, address = s.accept() #incoming connection
+                    client.setblocking(False)
+                    readers.append(client)
+                    logging.info(f'Connection: {address}')
                 else:
-                    pass
-                
+                    
+
             except Exception as ex:
                 logging.warning(ex.args)
 
