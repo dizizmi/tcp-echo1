@@ -1,0 +1,37 @@
+#tcp server in a process that handles multiple clients
+#echos back the data the client sent
+
+import logging
+import multiprocessing
+import select
+import socket
+
+logging.basicConfig(format='%(levelname)s - %(asctime)s : %(message)s', datefmt='%Y-%m-%d %H:%M:%S', level=logging.DEBUG)
+
+#server
+def chatserver(ip, sort):
+    server = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #adressfamilyIPV4, TCP socketstream
+    logging.info(f'Binding to [{ip}, {port}]')
+    server.bind((ip, port))
+    server.setblocking(False)
+    server.listen(100)
+    logging.info(f'Listening to {ip}:{port}')
+
+    readers = [server]
+
+    while True:
+        readable, writable, errored = select.select(readers, [], [], 0.5) #select a list to read from, write to, list of errors
+        #for every run readable, loop
+        for s in readable: #for socket in readable
+            try:
+                if s == server: #s is server socket
+                    pass
+                else:
+                    pass
+                
+            except Exception as ex:
+                logging.warning(ex.args)
+
+
+            
+
