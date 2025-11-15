@@ -44,5 +44,14 @@ def chatserver(ip, sort):
                 logging.warning(ex.args)
 
 
+def main():
+    #run server
+    svr = multiprocessing.Process(target=chatserver, args=['localhost', 2067], daemon=True, name='Server') #daemon true means it will close when main process closes
+
+
+    
+if __name__ == "__main__":
+    main()
+
             
 
