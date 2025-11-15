@@ -48,8 +48,20 @@ def main():
     #run server
     svr = multiprocessing.Process(target=chatserver, args=['localhost', 2067], daemon=True, name='Server') #daemon true means it will close when main process closes
 
+    #user to start and stop server
+    while True:
+        command = input('enter a command (start/stop): ')
+        if command == 'start':
+            logging.info('Starting server')
+            svr.start()
+        if command =='stop':
+            logging.info('Stopping server')
+            svr.terminate()
+            svr.join()
+            svr.close()
+            logging.info('Server stopped')
 
-    
+
 if __name__ == "__main__":
     main()
 
