@@ -9,7 +9,7 @@ import socket
 logging.basicConfig(format='%(levelname)s - %(asctime)s : %(message)s', datefmt='%Y-%m-%d %H:%M:%S', level=logging.DEBUG)
 
 #server
-def chatserver(ip, sort):
+def chatserver(ip, port):
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM) #adressfamilyIPV4, TCP socketstream
     logging.info(f'Binding to [{ip}, {port}]')
     server.bind((ip, port))
@@ -25,7 +25,7 @@ def chatserver(ip, sort):
         for s in readable: #for socket in readable
             try:
                 if s == server: #s is server socket
-                    client.address = s.accept() #incoming connection
+                    client, address = s.accept() #incoming connection
                     client.setblocking(False)
                     readers.append(client)
                     logging.info(f'Connection: {address}')
@@ -60,7 +60,9 @@ def main():
             svr.join()
             svr.close()
             logging.info('Server stopped')
-
+             
+            break
+        logging.info('Application finished')
 
 if __name__ == "__main__":
     main()
